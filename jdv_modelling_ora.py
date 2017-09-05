@@ -9,13 +9,15 @@ def read_col_oracle(con_str,table_name):
 	jdbc_driver_name = 'oracle.jdbc.OracleDriver'
 	jdbc_driver_loc = './jdbc/ojdbc6.jar'
 	url = 'jdbc:oracle:thin:@10.54.9.105:4713/TRACEDEV'
+        username = ''
+        password = ''
 
 	args='-Djava.class.path=%s' % jdbc_driver_loc
 	jvm = jpype.getDefaultJVMPath()
 	if not jpype.isJVMStarted(): 
 		jpype.startJVM(jvm)
 
-	conn_ora = jaydebeapi.connect(jdbc_driver_name,[url,'HOBSIRASD','H0b51ras'],jdbc_driver_loc)
+	conn_ora = jaydebeapi.connect(jdbc_driver_name,[url,username,password],jdbc_driver_loc)
 	curs_ora = conn_ora.cursor()
 	print table_name
 	query_column_info = "select COLUMN_NAME, DATA_TYPE, DATA_LENGTH, NULLABLE FROM USER_TAB_COLUMNS where table_name =  '%s' ORDER BY COLUMN_ID" % (table_name.rstrip())
